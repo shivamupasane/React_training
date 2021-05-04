@@ -1,3 +1,4 @@
+import React from "react";
 import logo from './logo.svg';
 import './App.css';
 import DeveloperBio from './DeveloperBio';
@@ -18,7 +19,7 @@ function App() {
         >
           Learn React
         </a>
-        <DeveloperBio/>
+        <DeveloperBio title="Shivam Upasane's Bio" />
       </header>
     </div>
   );
