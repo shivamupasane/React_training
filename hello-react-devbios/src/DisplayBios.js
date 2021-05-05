@@ -14,6 +14,8 @@ export default class DisplayBios extends Component {
     }
     render() {
         return (
+           // use index if id is not there
+           //this.state.developers.map((dev, index) => <DeveloperBio developer = {dev} key = {index}/>)
            this.state.developers.map(dev => <DeveloperBio developer = {dev} key = {dev.id}/>)
         )
     }
