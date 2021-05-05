@@ -2,6 +2,7 @@ import React from "react";
 import logo from './logo.svg';
 import './App.css';
 import DeveloperBio from './DeveloperBio';
+import DisplayBios from "./DisplayBios";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         >
           Learn React
         </a>
-        <DeveloperBio title="Shivam Upasane's Bio" />
+        <DisplayBios/>
       </header>
     </div>
   );
