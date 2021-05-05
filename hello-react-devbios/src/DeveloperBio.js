@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 function DeveloperBio(props) {
     return (
         <div className="card d-inline-block text-dark">
@@ -15,5 +15,8 @@ function DeveloperBio(props) {
         </div>
     )
 }
-
+// adding type checking with PropTypes
+DeveloperBio.PropTypes = {
+    developer: PropTypes.developer
+}
 export default DeveloperBio
