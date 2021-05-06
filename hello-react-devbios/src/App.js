@@ -1,10 +1,26 @@
-import React from "react";
+import React, { Component } from "react";
 import logo from './logo.svg';
 import './App.css';
-import DeveloperBio from './DeveloperBio';
 import DisplayBios from "./DisplayBios";
+import AddDeveloper from "./AddDeveloper";
+import Developer from "./Developer";
 
-function App() {
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        developers: [
+            new Developer(1, "Shivam", "Upasane", "Javascript", 2017),
+            new Developer(2, "Bill", "Gates", "BASIC", 1965)
+        ]
+    }
+}
+addDeveloper = (developer) => {
+developer.id = this.state.developers.length + 1;
+let newDevs = [...this.state.developers, developer];
+this.setState({developers: newDevs});
+}
+render() {
   return (
     <div className="App">
       <header className="App-header">
@@ -20,10 +36,12 @@ function App() {
         >
           Learn React
         </a>
-        <DisplayBios/>
+        <DisplayBios developers={this.state.developers}/>
+        <AddDeveloper addDeveloper={this.addDeveloper}/>
       </header>
     </div>
   );
+  }
 }
 
 export default App;

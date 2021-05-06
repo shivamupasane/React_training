@@ -9,14 +9,14 @@ function DeveloperBio(props) {
                     <span className="font-weight-bold">Favorite Dev Language:</span> {props.developer.favoriteLanguage}
                 </p>
                 <p className="card-text">
-                    <span className="font-weight-bold">Year Started:</span> {props.developer.yearStarted}7
+                    <span className="font-weight-bold">Year Started:</span> {props.developer.yearStarted}
                 </p>
             </div>
         </div>
     )
 }
 // adding type checking with PropTypes
-DeveloperBio.PropTypes = {
+DeveloperBio.propTypes = {
     developer: PropTypes.developer
 }
 export default DeveloperBio
