@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import logo from './logo.svg';
 import './App.css';
 import DisplayBios from "./DisplayBios";
 import AddDeveloper from "./AddDeveloper";
 import Developer from "./Developer";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./Home";
+import NavBar from "./NavBar";
 
 class App extends Component {
   constructor(props) {
@@ -22,24 +24,23 @@ this.setState({developers: newDevs});
 }
 render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <DisplayBios developers={this.state.developers}/>
-        <AddDeveloper addDeveloper={this.addDeveloper}/>
-      </header>
-    </div>
+    <Router>
+      <NavBar/>
+      <Switch>
+<Route exact path="/">
+<Home/>
+</Route>
+<Route  path="/bios">
+<DisplayBios developers={this.state.developers}/>
+</Route>
+<Route path="/create-bio">
+<AddDeveloper addDeveloper={this.addDeveloper}/>
+</Route>
+<Route path="*">
+<div>Page Not Found!!!</div>
+</Route>
+      </Switch>
+    </Router>     
   );
   }
 }

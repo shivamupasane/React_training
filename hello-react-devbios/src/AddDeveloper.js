@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Developer from './Developer';
-
-export default class AddDeveloper extends Component {
+import {withRouter} from 'react-router-dom'
+class AddDeveloper extends Component {
     constructor(props) {
         super(props) 
         this.state = {
@@ -35,6 +35,7 @@ export default class AddDeveloper extends Component {
         );
         this.props.addDeveloper(dev);
         document.getElementById("devForm").reset();
+        this.props.history.push('/bios');
         //this.clearForm();
     }
     render() {
@@ -70,3 +71,4 @@ export default class AddDeveloper extends Component {
         )
     }
 }
+export default withRouter(AddDeveloper);
