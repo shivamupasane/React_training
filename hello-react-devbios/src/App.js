@@ -11,11 +11,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        developers: [
-            new Developer(1, "Shivam", "Upasane", "Javascript", 2017),
-            new Developer(2, "Bill", "Gates", "BASIC", 1965)
-        ]
+        developers: []
     }
+}
+componentDidMount() {
+  fetch("https://tech-services-1000201953.uc.r.appspot.com/developers")
+  .then(response => response.json())
+  .then(dev => this.setState({developers: dev}))
+  .catch(error => console.log("error"+ error));
 }
 addDeveloper = (developer) => {
 developer.id = this.state.developers.length + 1;
