@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import './App.css';
+import '../styles/App.css';
 import DisplayBios from "./DisplayBios";
 import AddDeveloper from "./AddDeveloper";
-import Developer from "./Developer";
+import Developer from "../models/Developer";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
 import NavBar from "./NavBar";

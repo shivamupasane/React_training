@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import logo from './logo.svg';
-import './NavBar.css'
+import logo from '../logo.svg';
+import '../styles/NavBar.css'
 function NavBar() {
     return (
         <nav className="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between">
