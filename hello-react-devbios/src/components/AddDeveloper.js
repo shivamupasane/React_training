@@ -1,31 +1,49 @@
 import React, { Component } from 'react';
 import Developer from '../models/Developer';
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+
 class AddDeveloper extends Component {
-    constructor(props) {
-        super(props) 
+    constructor(props){
+        super(props);
         this.state = {
-            firstName: '',
+            firstName:'',
             lastName:'',
             favoriteLanguage:'',
-            yearStarted:''
+            yearStarted:null,
+            isDirtyForm: false,
+            isValidForm: false
         }
     }
-    clearForm = () => {
+
+    validation = () => {
+        let firstNameValid = this.state.firstName ? true : false;
+        let lastNameValid = this.state.lastName ? true : false;
+        let favoriteLanguageValid = this.state.favoriteLanguage ? true : false;
+        let yearStartedValid = !isNaN(this.state.yearStarted) && this.state.yearStarted;
+    
+        let isValid = firstNameValid && lastNameValid && favoriteLanguageValid && yearStartedValid;
+        let isDirty = firstNameValid || lastNameValid || favoriteLanguageValid || yearStartedValid;
+
         this.setState({
-            firstName: '',
-            lastName:'',
-            favoriteLanguage:'',
-            yearStarted:'' 
-        });
+            isValidForm: isValid,
+            isDirtyForm: isDirty
+        });      
     }
-    handleChange =(event) => {
+
+    handleChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
-        })
+        });
+        this.validation();
     }
-    handleSubmit = (event) => {
+
+    handleSubmit = (event) =>{
         event.preventDefault();
+
+        if(!this.state.isValidForm)
+            return;
+        
+
         let dev = new Developer(
             null,
             this.state.firstName,
@@ -33,22 +51,24 @@ class AddDeveloper extends Component {
             this.state.favoriteLanguage,
             this.state.yearStarted
         );
-        this.props.addDeveloper(dev);
         this.postDeveloper(dev);
-        document.getElementById("devForm").reset();
-        this.props.history.push('/bios');
-        //this.clearForm();
+        this.props.history.push("/bios");
     }
-    postDeveloper(dev) {
-        fetch("https://tech-services-1000201953.uc.r.appspot.com/developers", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dev)
-        })
-  .catch(error => console.log("error"+ error));
+
+    postDeveloper = (dev) => {
+        fetch("https://tech-services-1000201953.uc.r.appspot.com/developer",
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify(dev)
+            }
+        )
+        .catch(error => console.log("error: "+ error));
+        
     }
+
     render() {
         return (
             <div className="container">
@@ -58,19 +78,19 @@ class AddDeveloper extends Component {
                         <form id="devForm" onSubmit={this.handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="firstName">First Name</label>
-                                <input type="text" name="firstName"  className="form-control" onChange={this.handleChange}/>
+                                <input type="text" name="firstName" className="form-control" onChange={this.handleChange} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="lastName">Last Name</label>
-                                <input type="text" name="lastName" className="form-control" onChange={this.handleChange}/>
+                                <input type="text" name="lastName" className="form-control" onChange={this.handleChange} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="favoriteLanguage">Favorite Language</label>
-                                <input type="text" name="favoriteLanguage"  className="form-control"  onChange={this.handleChange}/>
+                                <input type="text" name="favoriteLanguage"  className="form-control" onChange={this.handleChange} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="yearStarted">Year Started</label>
-                                <input type="text" name="yearStarted"  className="form-control"  onChange={this.handleChange}/>
+                                <input type="text" name="yearStarted"  className="form-control" onChange={this.handleChange} />
                             </div>
                             <div className="form-group">
                                 <button type="submit" className="btn btn-success" >Submit</button>
@@ -78,8 +98,16 @@ class AddDeveloper extends Component {
                         </form>
                     </div>
                 </div>
+                {
+                    (!this.state.isValidForm && this.state.isDirtyForm)
+                    ?
+                        <div id="errorMessage"  style={{fontSize:'12px',color:'red'}}>All fields must be filled out</div>
+                    :
+                        <div id="errorMessage"></div>
+                }
             </div>
-        )
+        );
     }
 }
+
 export default withRouter(AddDeveloper);

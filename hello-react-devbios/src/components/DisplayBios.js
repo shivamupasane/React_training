@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
-import DeveloperBio from './DeveloperBio';
+import { connect } from 'react-redux';
 
-function DisplayBios(props) {
-    
-       return (
-           // use index if id is not there
-           //this.state.developers.map((dev, index) => <DeveloperBio developer = {dev} key = {index}/>)
-          props.developers.map(dev => <DeveloperBio developer = {dev} key = {dev.id}/>)
-        )
+import DeveloperBio from './DeveloperBio';
+import devActions from '../reducers/devReducers';
+
+class DisplayBios extends Component{
+    constructor(props){
+        super(props);
+    }
+
+    componentDidMount(){
+        fetch("https://tech-services-1000201953.uc.r.appspot.com/developers")
+        .then(response=>response.json())
+        .then(devs=>this.props.addDevsToStore(devs))
+        .catch(error=>console.log("error:" + error));
+    }
+
+    render(){
+        return (
+            this.props.developers.map((dev, index)=><DeveloperBio developer={dev} key={index} />)
+        );
+    }
 }
-export default DisplayBios
+
+export default connect(({developers})=>({
+    developers: developers//match state to prop
+}),{
+    addDevsToStore: devActions.getAllBiosActionCreator
+})(DisplayBios);

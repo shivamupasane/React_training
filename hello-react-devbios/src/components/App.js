@@ -1,51 +1,33 @@
-import React, { Component } from "react";
-import '../styles/App.css';
-import DisplayBios from "./DisplayBios";
-import AddDeveloper from "./AddDeveloper";
-import Developer from "../models/Developer";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "./Home";
-import NavBar from "./NavBar";
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        developers: []
-    }
-}
-componentDidMount() {
-  fetch("https://tech-services-1000201953.uc.r.appspot.com/developers")
-  .then(response => response.json())
-  .then(dev => this.setState({developers: dev}))
-  .catch(error => console.log("error"+ error));
-}
-addDeveloper = (developer) => {
-developer.id = this.state.developers.length + 1;
-let newDevs = [...this.state.developers, developer];
-this.setState({developers: newDevs});
-}
-render() {
+import '../styles/App.css';
+import DisplayBios from './DisplayBios';
+import AddDeveloper from './AddDeveloper';
+import Home from './Home';
+import Navbar from './NavBar';
+
+function App(){
   return (
-    <Router>
-      <NavBar/>
-      <Switch>
-<Route exact path="/">
-<Home/>
-</Route>
-<Route  path="/bios">
-<DisplayBios developers={this.state.developers}/>
-</Route>
-<Route path="/create-bio">
-<AddDeveloper addDeveloper={this.addDeveloper}/>
-</Route>
-<Route path="*">
-<div>Page Not Found!!!</div>
-</Route>
-      </Switch>
-    </Router>     
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path="/"><Home /></Route>
+          <Route path="/bios">
+            <DisplayBios />
+          </Route>
+          <Route path="/create-bio">
+            <AddDeveloper />
+          </Route>
+          <Route path="*"><div>Page Not Found</div></Route>
+        </Switch>
+      </Router>
   );
-  }
 }
 
 export default App;
+
