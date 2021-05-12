@@ -1,16 +1,23 @@
 import { handleActions } from 'redux-actions';
 
-const Types = {
-    GET_ALL_BIOS: 'GET_ALL_BIOS'
+export const Types = {
+    GET_ALL_BIOS_REQUEST : 'GET_ALL_BIOS_REQUEST',
+    GET_ALL_BIOS_SUCCESS: 'GET_ALL_BIOS_SUCCESS'
 }
 
 const devActions = {
-    getAllBiosActionCreator: (developers) => ({ 
-        type: Types.GET_ALL_BIOS,
+    getAllBiosRequestActionCreator: () => ({
+        type: Types.GET_ALL_BIOS_REQUEST
+    }),
+    getAllBiosSuccessActionCreator: (developers) => ({ 
+        type: Types.GET_ALL_BIOS_SUCCESS,
         developers
     }),
     reducer: handleActions({
-        [Types.GET_ALL_BIOS]: (state, action) => ({
+        [Types.GET_ALL_BIOS_REQUEST]: (state) => ({
+           state
+        }),
+        [Types.GET_ALL_BIOS_SUCCESS]: (state, action) => ({
             ...state,
             developers: action.developers
         })
