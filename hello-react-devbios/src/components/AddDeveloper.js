@@ -56,15 +56,7 @@ class AddDeveloper extends Component {
     }
 
     postDeveloper = (dev) => {
-        fetch("https://tech-services-1000201953.uc.r.appspot.com/developer",
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                body: JSON.stringify(dev)
-            }
-        )
+      
         .catch(error => console.log("error: "+ error));
         
     }
