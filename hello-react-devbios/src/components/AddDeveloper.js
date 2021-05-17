@@ -1,97 +1,77 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState} from 'react';
 import Developer from '../models/Developer';
 import { withRouter } from 'react-router-dom';
+import devActions from '../reducers/devReducers';
+import { connect } from 'react-redux';
+function AddDeveloper (props) {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [favoriteLanguage, setFavoriteLanguage] = useState('');
+    const [yearStarted, setYearStarted] = useState('');
+    const [isDirtyForm, setIsDirtyForm] = useState('');
+    const [isValidForm, setIsValidForm] = useState('');
 
-class AddDeveloper extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            firstName:'',
-            lastName:'',
-            favoriteLanguage:'',
-            yearStarted:null,
-            isDirtyForm: false,
-            isValidForm: false
-        }
-    }
 
-    validation = () => {
-        let firstNameValid = this.state.firstName ? true : false;
-        let lastNameValid = this.state.lastName ? true : false;
-        let favoriteLanguageValid = this.state.favoriteLanguage ? true : false;
-        let yearStartedValid = !isNaN(this.state.yearStarted) && this.state.yearStarted;
+    useEffect(() => {
+        let firstNameValid = firstName ? true : false;
+        let lastNameValid = lastName ? true : false;
+        let favoriteLanguageValid = favoriteLanguage ? true : false;
+        let yearStartedValid = !isNaN(yearStarted) && yearStarted;
     
         let isValid = firstNameValid && lastNameValid && favoriteLanguageValid && yearStartedValid;
         let isDirty = firstNameValid || lastNameValid || favoriteLanguageValid || yearStartedValid;
+setIsDirtyForm(isDirty);
+setIsValidForm(isValid);      
+    }, [firstName, lastName, favoriteLanguage, yearStarted])
 
-        this.setState({
-            isValidForm: isValid,
-            isDirtyForm: isDirty
-        });      
-    }
-
-    handleChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-        this.validation();
-    }
-
-    handleSubmit = (event) =>{
+    function handleSubmit(event) {
         event.preventDefault();
 
-        if(!this.state.isValidForm)
+        if(!isValidForm)
             return;
         
 
         let dev = new Developer(
             null,
-            this.state.firstName,
-            this.state.lastName,
-            this.state.favoriteLanguage,
-            this.state.yearStarted
+            firstName,
+            lastName,
+            favoriteLanguage,
+            yearStarted
         );
-        this.postDeveloper(dev);
-        this.props.history.push("/bios");
+        props.postDeveloper(dev);
+        props.history.push("/bios");
     }
 
-    postDeveloper = (dev) => {
-      
-        .catch(error => console.log("error: "+ error));
-        
-    }
-
-    render() {
         return (
             <div className="container">
                 <h1>Add Developer Bio</h1>
                 <div className="row">
                     <div className="col-mid-6">
-                        <form id="devForm" onSubmit={this.handleSubmit}>
+                        <form id="devForm" onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="firstName">First Name</label>
-                                <input type="text" name="firstName" className="form-control" onChange={this.handleChange} />
+                                <input type="text" name="firstName" className="form-control" onChange={(e) => setFirstName(e.target.value)} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="lastName">Last Name</label>
-                                <input type="text" name="lastName" className="form-control" onChange={this.handleChange} />
+                                <input type="text" name="lastName" className="form-control" onChange={(e) => setLastName(e.target.value)} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="favoriteLanguage">Favorite Language</label>
-                                <input type="text" name="favoriteLanguage"  className="form-control" onChange={this.handleChange} />
+                                <input type="text" name="favoriteLanguage"  className="form-control" onChange={(e) => setFavoriteLanguage(e.target.value)} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="yearStarted">Year Started</label>
-                                <input type="text" name="yearStarted"  className="form-control" onChange={this.handleChange} />
+                                <input type="text" name="yearStarted"  className="form-control" onChange={(e) => setYearStarted(e.target.value)} />
                             </div>
                             <div className="form-group">
-                                <button type="submit" className="btn btn-success" >Submit</button>
+                                <button type="submit" disabled={!isValidForm} className="btn btn-success" >Submit</button>
                             </div>
                         </form>
                     </div>
                 </div>
                 {
-                    (!this.state.isValidForm && this.state.isDirtyForm)
+                    (!isValidForm && isDirtyForm)
                     ?
                         <div id="errorMessage"  style={{fontSize:'12px',color:'red'}}>All fields must be filled out</div>
                     :
@@ -100,6 +80,7 @@ class AddDeveloper extends Component {
             </div>
         );
     }
-}
 
-export default withRouter(AddDeveloper);
+export default connect(null, {
+    postDeveloper: devActions.addDevBiosActionCreator
+})(withRouter(AddDeveloper));
