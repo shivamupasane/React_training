@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Developer from '../models/Developer';
 import { withRouter } from 'react-router-dom';
-
+import devActions from '../reducers/devReducers';
+import { connect } from 'react-redux';
 class AddDeveloper extends Component {
     constructor(props){
         super(props);
@@ -51,14 +52,8 @@ class AddDeveloper extends Component {
             this.state.favoriteLanguage,
             this.state.yearStarted
         );
-        this.postDeveloper(dev);
+        this.props.postDeveloper(dev);
         this.props.history.push("/bios");
-    }
-
-    postDeveloper = (dev) => {
-      
-        .catch(error => console.log("error: "+ error));
-        
     }
 
     render() {
@@ -102,4 +97,6 @@ class AddDeveloper extends Component {
     }
 }
 
-export default withRouter(AddDeveloper);
+export default connect(null, {
+    postDeveloper: devActions.addDevBiosActionCreator
+})(withRouter(AddDeveloper));

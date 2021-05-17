@@ -1,6 +1,6 @@
 import devActions, {Types} from '../reducers/devReducers';
-import {takeLatest, call, put} from 'redux-saga/effects';
-import { getDevelopers } from '../api/developerAPI';
+import {takeLatest, call, put, fork} from 'redux-saga/effects';
+import { getDevelopers, postDeveloper } from '../api/developerAPI';
 
 //worker
 function* getDevBios() {
@@ -12,11 +12,28 @@ function* getDevBios() {
     }
 }
 
-
+function* addDevBios({developer}) {
+    try {
+        yield call(postDeveloper, developer);
+    } catch {
+        console.log('Error occurred fetching Developers: '+error);
+    }
+}
 
 
 //watchers
 function* watchgetAllBiosRequest() {
     yield takeLatest(Types.GET_ALL_BIOS_REQUEST, getDevBios);
 }
-export default watchgetAllBiosRequest
+function* watchAddDevBios() {
+    yield takeLatest(Types.ADD_BIOS, addDevBios)
+}
+// single watcher exported
+//export default watchgetAllBiosRequest
+
+// multiple watcher export with fork
+const developerSagas = [
+fork(watchgetAllBiosRequest),
+fork(watchAddDevBios)
+];
+export default developerSagas;

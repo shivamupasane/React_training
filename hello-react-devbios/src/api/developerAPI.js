@@ -2,7 +2,7 @@ export const getDevelopers = () => {
     return fetch("https://tech-services-1000201953.uc.r.appspot.com/developers")
         .then(response=>response.json());
 }
-export const addDeveloper = (dev) => {
+export const postDeveloper = (dev) => {
     return fetch("https://tech-services-1000201953.uc.r.appspot.com/developer",
     {
         method: 'POST',

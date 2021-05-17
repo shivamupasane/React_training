@@ -7,14 +7,14 @@ import './styles/index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import devActions from './reducers/devReducers';
-import watchgetAllBiosRequest from './sagas/developerSagas';
+import rootSaga from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   devActions.reducer,
   applyMiddleware(sagaMiddleware)
 );
-sagaMiddleware.run(watchgetAllBiosRequest);
+sagaMiddleware.run(rootSaga);
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>

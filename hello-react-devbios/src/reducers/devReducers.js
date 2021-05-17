@@ -2,7 +2,8 @@ import { handleActions } from 'redux-actions';
 
 export const Types = {
     GET_ALL_BIOS_REQUEST : 'GET_ALL_BIOS_REQUEST',
-    GET_ALL_BIOS_SUCCESS: 'GET_ALL_BIOS_SUCCESS'
+    GET_ALL_BIOS_SUCCESS: 'GET_ALL_BIOS_SUCCESS',
+    ADD_BIOS: 'ADD_BIOS'
 }
 
 const devActions = {
@@ -13,6 +14,10 @@ const devActions = {
         type: Types.GET_ALL_BIOS_SUCCESS,
         developers
     }),
+    addDevBiosActionCreator: (developer) => ({
+        type: Types.ADD_BIOS,
+        developer
+    }),
     reducer: handleActions({
         [Types.GET_ALL_BIOS_REQUEST]: (state) => ({
            state
@@ -20,6 +25,9 @@ const devActions = {
         [Types.GET_ALL_BIOS_SUCCESS]: (state, action) => ({
             ...state,
             developers: action.developers
+        }),
+        [Types.ADD_BIOS]: (state, action) => ({
+            state
         })
     },{//initial state
         developers: []
