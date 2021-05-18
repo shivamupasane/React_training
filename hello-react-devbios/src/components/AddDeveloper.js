@@ -1,8 +1,8 @@
-import React, { Component, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import Developer from '../models/Developer';
 import { withRouter } from 'react-router-dom';
-import devActions from '../reducers/devReducers';
-import { connect } from 'react-redux';
+
+import {postDeveloper} from '../api/developerAPI';
 function AddDeveloper (props) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -38,7 +38,7 @@ setIsValidForm(isValid);
             favoriteLanguage,
             yearStarted
         );
-        props.postDeveloper(dev);
+        postDeveloper(dev);
         props.history.push("/bios");
     }
 
@@ -81,6 +81,4 @@ setIsValidForm(isValid);
         );
     }
 
-export default connect(null, {
-    postDeveloper: devActions.addDevBiosActionCreator
-})(withRouter(AddDeveloper));
+export default withRouter(AddDeveloper);

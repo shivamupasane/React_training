@@ -1,27 +1,22 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {useContext, useEffect } from 'react';
+import { getDevelopers } from '../api/developerAPI';
+import AppContext from '../contexts';
 
 import DeveloperBio from './DeveloperBio';
-import devActions from '../reducers/devReducers';
-import { getDevelopers } from '../api/developerAPI';
 
-class DisplayBios extends Component{
-    constructor(props){
-        super(props);
-    }
+function DisplayBios() {
+    const {developers, setDevelopers} = useContext(AppContext);
 
-    render(){
+    useEffect(() => {
+        getDevelopers()
+        .then(devs => setDevelopers(devs))
+        .catch(error => console.log("error", error));
+    }, [setDevelopers])
         return (
-            this.props.developers ? 
-            this.props.developers.map((dev, index)=><DeveloperBio developer={dev} key={index} />)
+            developers ? 
+            developers.map((dev, index)=><DeveloperBio developer={dev} key={index} />)
             : <div></div>
         );
-    }
 }
 
-export default connect(({developers})=>({
-    developers: developers//match state to prop
-}),{
-    //creates a prop and assign action creator to it
-    addDevsToStore: devActions.getAllBiosRequestActionCreator
-})(DisplayBios);
+export default DisplayBios;

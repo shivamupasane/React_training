@@ -1,26 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import createSagaMiddleware from 'redux-saga';
+
 import './styles/index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import devActions from './reducers/devReducers';
-import watchgetAllBiosRequest from './sagas/developerSagas';
-
-const sagaMiddleware = createSagaMiddleware();
-const store = createStore(
-  devActions.reducer,
-  applyMiddleware(sagaMiddleware)
-);
-sagaMiddleware.run(watchgetAllBiosRequest);
+import DeveloperContextProvider from './contexts/DeveloperContextProvider';
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
+  <React.StrictMode>
+    <DeveloperContextProvider>
       <App />
-    </React.StrictMode>
-  </Provider>,
+    </DeveloperContextProvider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
