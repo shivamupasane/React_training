@@ -10,6 +10,7 @@ import DisplayBios from './DisplayBios';
 import AddDeveloper from './AddDeveloper';
 import Home from './Home';
 import Navbar from './NavBar';
+import EditDeveloper from './EditDeveloper';
 
 function App(){
   return (
@@ -22,6 +23,9 @@ function App(){
           </Route>
           <Route path="/create-bio">
             <AddDeveloper />
+          </Route>
+          <Route path="/edit/:id">
+            <EditDeveloper/>
           </Route>
           <Route path="*"><div>Page Not Found</div></Route>
         </Switch>

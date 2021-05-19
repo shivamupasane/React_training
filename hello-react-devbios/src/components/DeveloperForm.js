@@ -1,6 +1,7 @@
-import React from 'react'
-
+import React, {useState, useEffect} from 'react'
+import Developer from "../models/Developer";
 function DeveloperForm(props) {
+    console.log("developer", props.developer)
     const [firstName, setFirstName] = useState(props.developer.firstName);
     const [lastName, setLastName] = useState(props.developer.lastName)
     const [favoriteLanguage, setFavoriteLanguage] = useState(props.developer.favoriteLanguage);
@@ -46,19 +47,19 @@ setIsValidForm(isValid);
                         <form id="devForm" onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="firstName">First Name</label>
-                                <input type="text" name="firstName" className="form-control" onChange={(e) => setFirstName(e.target.value)} />
+                                <input type="text" name="firstName" value={firstName} className="form-control" onChange={(e) => setFirstName(e.target.value)} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="lastName">Last Name</label>
-                                <input type="text" name="lastName" className="form-control" onChange={(e) => setLastName(e.target.value)} />
+                                <input type="text" name="lastName" value={lastName} className="form-control" onChange={(e) => setLastName(e.target.value)} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="favoriteLanguage">Favorite Language</label>
-                                <input type="text" name="favoriteLanguage"  className="form-control" onChange={(e) => setFavoriteLanguage(e.target.value)} />
+                                <input type="text" name="favoriteLanguage"  value={favoriteLanguage} className="form-control" onChange={(e) => setFavoriteLanguage(e.target.value)} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="yearStarted">Year Started</label>
-                                <input type="text" name="yearStarted"  className="form-control" onChange={(e) => setYearStarted(e.target.value)} />
+                                <input type="text" name="yearStarted"  value={yearStarted} className="form-control" onChange={(e) => setYearStarted(e.target.value)} />
                             </div>
                             <div className="form-group">
                                 <button type="submit" disabled={!isValidForm} className="btn btn-success" >Submit</button>

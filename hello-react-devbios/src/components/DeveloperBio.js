@@ -1,22 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
+
 function DeveloperBio(props) {
+
     return (
         <div className="card d-inline-block text-dark">
             <div className="card-body">
-                <h5 className="card-title" style={{fontSize:'12px', color: 'red'}}>{props.developer.firstName} {props.developer.lastName}</h5>
+                <h3 className="card-title">{props.developer.firstName} {props.developer.lastName}</h3>
                 <p className="card-text">
-                    <span className="font-weight-bold">Favorite Dev Language:</span> {props.developer.favoriteLanguage}
+                    <span className="bold">Favorite Language:</span> {props.developer.favoriteLanguage}
                 </p>
                 <p className="card-text">
-                    <span className="font-weight-bold">Year Started:</span> {props.developer.yearStarted}
+                    <span className="bold">Year Started:</span> {props.developer.yearStarted}
+                </p>
+                <p>
+                    <button 
+                        className="btn btn-success" 
+                        onClick={()=> props.history.push(`/edit/${props.developer.id}`)}>Edit</button>
                 </p>
             </div>
         </div>
-    )
+    );
 }
-// adding type checking with PropTypes
+//adding Type Checking with PropTypes
 DeveloperBio.propTypes = {
-    developer: PropTypes.developer
+    developer: PropTypes.object
 }
-export default DeveloperBio
+
+export default withRouter(DeveloperBio);

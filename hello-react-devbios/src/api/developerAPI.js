@@ -13,3 +13,17 @@ export const postDeveloper = (dev) => {
     }
 )
 }
+
+export const putDeveloper = (developer) => {
+    return (
+        fetch("https://tech-services-1000201953.uc.r.appspot.com/developer",
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(developer)
+            }
+        )
+    );
+}
